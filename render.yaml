@@ -16,10 +16,28 @@ services:
         sync: false
       - key: COOKIE_SECURE
         value: "true"
-      - key: DATABASE_URL
+      - key: SPRING_PROFILES_ACTIVE
+        value: render
+      - key: DB_HOST
         fromDatabase:
           name: fixcampus-db
-          property: connectionString
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: fixcampus-db
+          property: port
+      - key: DB_NAME
+        fromDatabase:
+          name: fixcampus-db
+          property: database
+      - key: DB_USERNAME
+        fromDatabase:
+          name: fixcampus-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: fixcampus-db
+          property: password
 
   - type: web
     runtime: static
