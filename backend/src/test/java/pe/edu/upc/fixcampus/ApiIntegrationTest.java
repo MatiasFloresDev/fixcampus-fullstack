@@ -69,6 +69,11 @@ class ApiIntegrationTest {
         var report = reporter.ok("POST","/reports",input);
         String path = "/reports/" + report.get("id").asLong();
         assertThat(reporter.ok("GET","/reports?status=NEW&categoryId="+category+"&areaId="+area+"&priority=HIGH&q=proyector",null).size()).isEqualTo(1);
+        var comment = reporter.ok("POST",path+"/comments",Map.of("body","Lo reporté al salir de clase"));
+        String commentPath = path+"/comments/"+comment.get("id").asLong();
+        assertThat(reporter.ok("PUT",commentPath,Map.of("body","Actualicé el detalle del reporte")).get("body").asText())
+            .isEqualTo("Actualicé el detalle del reporte");
+        reporter.ok("DELETE",commentPath,null);
         assertThat(other.call("GET",path,null).statusCode()).isEqualTo(403);
         assertThat(other.call("PUT",path,input).statusCode()).isEqualTo(403);
         assertThat(reporter.call("POST",path+"/assign",Map.of("technicianId",technician,"note","Asignar")).statusCode()).isEqualTo(403);
