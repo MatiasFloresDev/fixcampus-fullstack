@@ -29,4 +29,10 @@ public class ReportController {
     @PostMapping("/{id}/transition") ReportView transition(@PathVariable Long id,@Valid @RequestBody Transition input) { return service.transition(id,input); }
     @GetMapping("/{id}/comments") List<CommentView> comments(@PathVariable Long id) { return comments.list(id); }
     @PostMapping("/{id}/comments") @ResponseStatus(HttpStatus.CREATED) CommentView addComment(@PathVariable Long id,@Valid @RequestBody CommentInput input) { return comments.create(id,input); }
+    @PutMapping("/{id}/comments/{commentId}") CommentView updateComment(@PathVariable Long id,@PathVariable Long commentId,
+                                                                          @Valid @RequestBody CommentInput input) {
+        return comments.update(id,commentId,input);
+    }
+    @DeleteMapping("/{id}/comments/{commentId}") @ResponseStatus(HttpStatus.NO_CONTENT)
+    void deleteComment(@PathVariable Long id,@PathVariable Long commentId) { comments.delete(id,commentId); }
 }

@@ -32,7 +32,28 @@ public class CommentService {
         c.body=input.body().trim(); c.createdAt=Instant.now(); comments.saveAndFlush(c);
         return new CommentView(c.id,c.body,c.author.id,c.author.name,c.createdAt);
     }
+    public CommentView update(Long reportId, Long commentId, CommentInput input) {
+        ReportComment comment=findComment(reportId, commentId);
+        requireManage(comment);
+        comment.body=input.body().trim();
+        comments.saveAndFlush(comment);
+        return new CommentView(comment.id,comment.body,comment.author.id,comment.author.name,comment.createdAt);
+    }
+    public void delete(Long reportId, Long commentId) {
+        ReportComment comment=findComment(reportId, commentId);
+        requireManage(comment);
+        comments.delete(comment);
+    }
     private Report find(Long id) { return reports.findById(id).orElseThrow(ApiException::missing); }
+    private ReportComment findComment(Long reportId, Long commentId) {
+        ReportComment comment=comments.findById(commentId).orElseThrow(ApiException::missing);
+        if(!comment.report.id.equals(reportId)) throw ApiException.missing();
+        return comment;
+    }
+    private void requireManage(ReportComment comment) {
+        AppUser actor=current.get();
+        if(actor.role!=Role.ADMIN && !comment.author.id.equals(actor.id)) throw ApiException.forbidden();
+    }
     private void requireRead(Report report) {
         AppUser actor=current.get();
         boolean own=actor.role==Role.REPORTER && report.reporter.id.equals(actor.id);

@@ -47,6 +47,16 @@ class ApiIntegrationTest {
         assertThat(client.call("POST", "/auth/login", Map.of("email","admin@fixcampus.local","password","OnlyTests-9284!")).statusCode()).isEqualTo(403);
     }
 
+    @Test void swaggerDocumentsCrudAndReportFilters() throws Exception {
+        var request = HttpRequest.newBuilder(URI.create("http://localhost:" + port + "/v3/api-docs"))
+            .GET().build();
+        var response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+        assertThat(response.statusCode()).isEqualTo(200);
+        assertThat(response.body()).contains("/api/users", "/api/categories", "/api/areas", "/api/technicians", "/api/reports");
+        assertThat(response.body()).contains("categoryId", "areaId", "priority", "status", "q");
+        assertThat(response.body()).contains("\"put\"", "\"delete\"");
+    }
+
     @Test void ownershipTransitionsHistoryDashboardAndFallbackWorkTogether() throws Exception {
         var admin = new Client(); admin.login("admin@fixcampus.local");
         var reporter = new Client(); reporter.login("reporter@fixcampus.local");
@@ -58,6 +68,7 @@ class ApiIntegrationTest {
         var input = Map.of("title","Proyector no enciende","description","No enciende al presionar el botón","location","Aula 302", "categoryId",category,"areaId",area,"priority","HIGH");
         var report = reporter.ok("POST","/reports",input);
         String path = "/reports/" + report.get("id").asLong();
+        assertThat(reporter.ok("GET","/reports?status=NEW&categoryId="+category+"&areaId="+area+"&priority=HIGH&q=proyector",null).size()).isEqualTo(1);
         assertThat(other.call("GET",path,null).statusCode()).isEqualTo(403);
         assertThat(other.call("PUT",path,input).statusCode()).isEqualTo(403);
         assertThat(reporter.call("POST",path+"/assign",Map.of("technicianId",technician,"note","Asignar")).statusCode()).isEqualTo(403);
