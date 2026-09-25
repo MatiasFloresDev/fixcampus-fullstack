@@ -52,7 +52,9 @@ class ApiIntegrationTest {
             .GET().build();
         var response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
         assertThat(response.statusCode()).isEqualTo(200);
-        assertThat(response.body()).contains("/api/users", "/api/categories", "/api/areas", "/api/technicians", "/api/reports");
+        assertThat(response.body()).contains("/api/users", "/api/categories", "/api/areas", "/api/technicians", "/api/reports",
+            "/api/reports/{reportId}/comments", "/api/notifications", "/api/report-history", "/api/priorities",
+            "/api/report-statuses", "/api/roles");
         assertThat(response.body()).contains("categoryId", "areaId", "priority", "status", "q");
         assertThat(response.body()).contains("\"put\"", "\"delete\"");
     }

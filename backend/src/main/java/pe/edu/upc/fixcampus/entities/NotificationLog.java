@@ -1,4 +1,4 @@
-package pe.edu.upc.fixcampus.model;
+package pe.edu.upc.fixcampus.entities;
 
 import jakarta.persistence.*;
 import java.time.Instant;

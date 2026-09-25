@@ -1,6 +1,6 @@
 package pe.edu.upc.fixcampus.repository;
 
-import pe.edu.upc.fixcampus.model.ReportHistory;
+import pe.edu.upc.fixcampus.entities.ReportHistory;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

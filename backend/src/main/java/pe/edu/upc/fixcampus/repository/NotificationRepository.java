@@ -1,6 +1,6 @@
 package pe.edu.upc.fixcampus.repository;
 
-import pe.edu.upc.fixcampus.model.NotificationLog;
+import pe.edu.upc.fixcampus.entities.NotificationLog;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

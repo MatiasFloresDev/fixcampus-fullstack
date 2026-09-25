@@ -1,6 +1,6 @@
 package pe.edu.upc.fixcampus.config;
 import pe.edu.upc.fixcampus.repository.*;
-import pe.edu.upc.fixcampus.model.AppUser;
+import pe.edu.upc.fixcampus.entities.AppUser;
 
 import org.springframework.context.annotation.*;
 import org.springframework.security.authentication.AuthenticationManager;

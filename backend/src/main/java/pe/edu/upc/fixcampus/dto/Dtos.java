@@ -1,5 +1,5 @@
 package pe.edu.upc.fixcampus.dto;
-import pe.edu.upc.fixcampus.model.*;
+import pe.edu.upc.fixcampus.entities.*;
 
 import jakarta.validation.constraints.*;
 import java.time.Instant;

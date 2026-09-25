@@ -3,7 +3,7 @@ import pe.edu.upc.fixcampus.dto.Dtos;
 import static pe.edu.upc.fixcampus.dto.Dtos.*;
 import pe.edu.upc.fixcampus.event.*;
 import pe.edu.upc.fixcampus.exception.*;
-import pe.edu.upc.fixcampus.model.*;
+import pe.edu.upc.fixcampus.entities.*;
 import pe.edu.upc.fixcampus.repository.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;

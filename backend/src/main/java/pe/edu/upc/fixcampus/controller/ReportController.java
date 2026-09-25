@@ -1,7 +1,7 @@
 package pe.edu.upc.fixcampus.controller;
 import pe.edu.upc.fixcampus.dto.Dtos;
 import static pe.edu.upc.fixcampus.dto.Dtos.*;
-import pe.edu.upc.fixcampus.model.*;
+import pe.edu.upc.fixcampus.entities.*;
 import pe.edu.upc.fixcampus.service.*;
 import pe.edu.upc.fixcampus.exception.*;
 
@@ -14,8 +14,7 @@ import java.util.List;
 @RequestMapping("/api/reports")
 public class ReportController {
     private final ReportService service;
-    private final CommentService comments;
-    public ReportController(ReportService service, CommentService comments) { this.service=service; this.comments=comments; }
+    public ReportController(ReportService service) { this.service=service; }
     @GetMapping List<ReportView> list(@RequestParam(required=false) ReportStatus status,
         @RequestParam(required=false) Long categoryId,@RequestParam(required=false) Long areaId,
         @RequestParam(required=false) Priority priority,@RequestParam(required=false,name="q") String query) {
@@ -27,12 +26,4 @@ public class ReportController {
     @DeleteMapping("/{id}") @ResponseStatus(HttpStatus.NO_CONTENT) void delete(@PathVariable Long id) { service.delete(id); }
     @PostMapping("/{id}/assign") ReportView assign(@PathVariable Long id,@Valid @RequestBody Assignment input) { return service.assign(id,input); }
     @PostMapping("/{id}/transition") ReportView transition(@PathVariable Long id,@Valid @RequestBody Transition input) { return service.transition(id,input); }
-    @GetMapping("/{id}/comments") List<CommentView> comments(@PathVariable Long id) { return comments.list(id); }
-    @PostMapping("/{id}/comments") @ResponseStatus(HttpStatus.CREATED) CommentView addComment(@PathVariable Long id,@Valid @RequestBody CommentInput input) { return comments.create(id,input); }
-    @PutMapping("/{id}/comments/{commentId}") CommentView updateComment(@PathVariable Long id,@PathVariable Long commentId,
-                                                                          @Valid @RequestBody CommentInput input) {
-        return comments.update(id,commentId,input);
-    }
-    @DeleteMapping("/{id}/comments/{commentId}") @ResponseStatus(HttpStatus.NO_CONTENT)
-    void deleteComment(@PathVariable Long id,@PathVariable Long commentId) { comments.delete(id,commentId); }
 }

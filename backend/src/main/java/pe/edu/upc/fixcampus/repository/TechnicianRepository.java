@@ -1,6 +1,6 @@
 package pe.edu.upc.fixcampus.repository;
 
-import pe.edu.upc.fixcampus.model.Technician;
+import pe.edu.upc.fixcampus.entities.Technician;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
