@@ -10,7 +10,6 @@ export class Api {
   private csrf: {token:string;headerName:string}|null = null;
   get<T>(path:string):Promise<T> { return firstValueFrom(this.http.get<T>('/api'+path,{withCredentials:true})); }
   async write<T>(method:'POST'|'PUT'|'DELETE',path:string,body:unknown = {}):Promise<T> {
-    // Spring invalidates the CSRF token when authentication changes. Never store it in localStorage.
     if (!this.csrf) this.csrf = await this.get('/auth/csrf');
     return firstValueFrom(this.http.request<T>(method,'/api'+path,{body,withCredentials:true,headers:new HttpHeaders({[this.csrf!.headerName]:this.csrf!.token})}));
   }

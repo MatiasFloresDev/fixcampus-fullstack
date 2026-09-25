@@ -4,7 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 import java.util.Optional;
 
-// Spring Data implementa estas interfaces. Los servicios no escriben SQL.
 interface UserRepository extends JpaRepository<AppUser, Long> {
     Optional<AppUser> findByEmailIgnoreCase(String email);
 }

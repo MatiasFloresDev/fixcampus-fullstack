@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 public class CurrentUser {
     private final UserRepository users;
     public CurrentUser(UserRepository users) { this.users = users; }
-    /** Lee el rol actual en BD: desactivar o cambiar un rol afecta sesiones existentes. */
     public AppUser get() {
         var auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth == null || !auth.isAuthenticated()) throw new ApiException(401,"unauthorized");

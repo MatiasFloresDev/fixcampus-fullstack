@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Locale;
 import static pe.edu.upc.fixcampus.Dtos.*;
 
-/** Las reglas de autorización y estado viven aquí, no en la interfaz Angular. */
 @Service
 @Transactional
 public class ReportService {
@@ -74,7 +73,6 @@ public class ReportService {
         if(report.status==ReportStatus.NEW) report.status=ReportStatus.ASSIGNED;
         report.updatedAt=Instant.now();
         record(report,actor,previous,"Asignado a "+technician.user.name+". "+text(input.note()));
-        // El listener se ejecuta después de confirmar la transacción del reporte.
         events.publishEvent(new AssignmentCreated(report.id,technician.user.email,report.title));
         return view(report);
     }

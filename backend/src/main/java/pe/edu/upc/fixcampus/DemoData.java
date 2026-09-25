@@ -7,7 +7,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-/** Activación explícita mediante entorno. No incluye contraseña predeterminada. */
 @Component
 @ConditionalOnProperty(name="fixcampus.seed.enabled",havingValue="true")
 public class DemoData implements CommandLineRunner {

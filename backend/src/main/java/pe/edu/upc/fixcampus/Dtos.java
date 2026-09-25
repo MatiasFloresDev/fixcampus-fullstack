@@ -4,7 +4,6 @@ import jakarta.validation.constraints.*;
 import java.time.Instant;
 import java.util.List;
 
-/** Contrato explícito: no serializar entidades evita ciclos y datos privados. */
 public final class Dtos {
     private Dtos() { }
     public record Login(@NotBlank @Email String email, @NotBlank String password) { }

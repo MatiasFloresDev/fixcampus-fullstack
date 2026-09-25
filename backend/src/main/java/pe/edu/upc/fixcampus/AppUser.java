@@ -2,7 +2,6 @@ package pe.edu.upc.fixcampus;
 
 import jakarta.persistence.*;
 
-/** Entidad interna: la API siempre devuelve UserView, nunca el hash. */
 @Entity
 @Table(name = "app_user")
 public class AppUser {

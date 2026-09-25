@@ -3,7 +3,6 @@ package pe.edu.upc.fixcampus;
 import jakarta.persistence.*;
 import java.time.Instant;
 
-/** Comentario de seguimiento escrito por un usuario autorizado. */
 @Entity
 @Table(name="report_comment", indexes=@Index(columnList="report_id"))
 public class ReportComment {

@@ -39,7 +39,6 @@ public class CatalogService {
         AppUser user=users.findById(input.userId()).orElseThrow(ApiException::missing);
         if(user.role!=Role.TECHNICIAN || !user.active) throw new ApiException(400,"technicianRole");
         var entity=id==null ? new Technician() : findTechnician(id);
-        // Un perfil existente conserva su identidad y sus asignaciones históricas.
         if(id!=null && !entity.user.id.equals(user.id)) throw new ApiException(409,"technicianLinked");
         entity.user=user; entity.specialty=input.specialty().trim(); entity.active=input.active();
         return view(technicians.saveAndFlush(entity));
