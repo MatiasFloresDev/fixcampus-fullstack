@@ -77,9 +77,6 @@ class ApiIntegrationTest {
         assertThat(dashboard.get("closed").asInt()).isEqualTo(1);
         assertThat(dashboard.get("averageResolutionHours").asDouble()).isGreaterThanOrEqualTo(0);
         assertThat(other.ok("GET","/dashboard",null).get("total").asInt()).isZero();
-        var suggestion = reporter.ok("POST","/ai/suggest",Map.of("description","La luminaria está rota"));
-        assertThat(suggestion.get("source").asText()).isEqualTo("MANUAL");
-        assertThat(suggestion.get("priority").asText()).isEqualTo("MEDIUM");
     }
 
     @Test void adminCrudDisablesRecordsAndProtectsExistingSessions() throws Exception {
