@@ -15,6 +15,7 @@ export class Api {
   }
   async restore():Promise<void> { try { this.user.set(await this.get<User>('/auth/me')); } catch { this.user.set(null); } }
   async login(email:string,password:string):Promise<void> { const user = await this.write<User>('POST','/auth/login',{email,password}); this.csrf = null; this.user.set(user); }
+  async register(name:string,email:string,password:string):Promise<void> { await this.write<User>('POST','/auth/register',{name,email,password}); this.csrf = null; }
   async logout():Promise<void> { await this.write('POST','/auth/logout'); this.csrf = null; this.user.set(null); }
   error(error:unknown):string { if(error instanceof HttpErrorResponse) return error.status === 0 ? 'No se pudo conectar al servidor / Cannot connect to server.' : error.error?.message || `HTTP ${error.status}`; return 'Ocurrió un error inesperado / An unexpected error occurred.'; }
 }

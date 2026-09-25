@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { AppComponent } from './app/app.component';
 import { Api } from './app/api.service';
 import { LoginComponent } from './app/login.component';
+import { RegisterComponent } from './app/register.component';
 import { DashboardComponent } from './app/dashboard.component';
 import { ReportsComponent } from './app/reports.component';
 import { ReportFormComponent } from './app/report-form.component';
@@ -17,6 +18,7 @@ const authenticated = async () => { const api=inject(Api),router=inject(Router);
 const administrator = async () => { const api=inject(Api),router=inject(Router); if(!api.user()) await api.restore(); return api.user()?.role==='ADMIN' ? true : router.createUrlTree(['/dashboard']); };
 const routes:Routes = [
   {path:'login',component:LoginComponent},
+  {path:'register',component:RegisterComponent},
   {path:'dashboard',component:DashboardComponent,canActivate:[authenticated]},
   {path:'reports',component:ReportsComponent,canActivate:[authenticated]},
   {path:'reports/new',component:ReportFormComponent,canActivate:[authenticated]},

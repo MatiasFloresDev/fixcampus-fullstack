@@ -24,6 +24,18 @@ public class UserService {
         this.users=users; this.technicians=technicians; this.encoder=encoder; this.current=current;
     }
     public List<UserView> list() { current.admin(); return users.findAll().stream().map(UserService::view).toList(); }
+    public UserView register(Register input) {
+        String email = input.email().trim().toLowerCase(Locale.ROOT);
+        users.findByEmailIgnoreCase(email).ifPresent(existing -> { throw new ApiException(409,"duplicate"); });
+        validatePassword(input.password());
+        AppUser user = new AppUser();
+        user.name = input.name().trim();
+        user.email = email;
+        user.passwordHash = encoder.encode(input.password());
+        user.role = Role.REPORTER;
+        user.active = true;
+        return view(users.save(user));
+    }
     public UserView get(Long id) { current.admin(); return view(find(id)); }
     public UserView save(Long id, UserInput input) {
         AppUser actor = current.admin();

@@ -23,9 +23,10 @@ public class AuthController {
     private final HttpSessionSecurityContextRepository contexts;
     private final HttpSessionCsrfTokenRepository csrf;
     private final CurrentUser current;
+    private final UserService users;
     public AuthController(AuthenticationManager manager, HttpSessionSecurityContextRepository contexts,
-                          HttpSessionCsrfTokenRepository csrf, CurrentUser current) {
-        this.manager=manager; this.contexts=contexts; this.csrf=csrf; this.current=current;
+                          HttpSessionCsrfTokenRepository csrf, CurrentUser current, UserService users) {
+        this.manager=manager; this.contexts=contexts; this.csrf=csrf; this.current=current; this.users=users;
     }
     @GetMapping("/csrf") Map<String,String> csrf(CsrfToken token) {
         return Map.of("token",token.getToken(),"headerName",token.getHeaderName());
@@ -42,6 +43,8 @@ public class AuthController {
             return UserService.view(current.get());
         } catch (AuthenticationException ex) { throw new ApiException(401,"credentials"); }
     }
+    @PostMapping("/register") @ResponseStatus(HttpStatus.CREATED)
+    UserView register(@Valid @RequestBody Register input) { return users.register(input); }
     @GetMapping("/me") UserView me() { return UserService.view(current.get()); }
     @PostMapping("/logout") @ResponseStatus(HttpStatus.NO_CONTENT)
     void logout(HttpServletRequest request) {

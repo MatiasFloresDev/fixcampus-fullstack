@@ -40,7 +40,7 @@ public class SecurityConfig implements WebMvcConfigurer {
             .csrf(config -> config.csrfTokenRepository(csrf))
             .securityContext(config -> config.securityContextRepository(contexts))
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/auth/csrf", "/api/auth/login", "/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**", "/error").permitAll()
+                .requestMatchers("/api/auth/csrf", "/api/auth/login", "/api/auth/register", "/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**", "/error").permitAll()
                 .anyRequest().authenticated())
             .exceptionHandling(errors -> errors
                 .authenticationEntryPoint((request,response,error) -> {

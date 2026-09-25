@@ -34,9 +34,10 @@ class ApiIntegrationTest {
             assertThat(response.statusCode()).as(response.body()).isBetween(200,299);
             return response.body().isBlank() ? json.nullNode() : json.readTree(response.body());
         }
-        void login(String email) throws Exception {
+        void login(String email) throws Exception { login(email, "OnlyTests-9284!"); }
+        void login(String email, String password) throws Exception {
             csrf = ok("GET", "/auth/csrf", null).get("token").asText();
-            ok("POST", "/auth/login", Map.of("email", email,"password","OnlyTests-9284!"));
+            ok("POST", "/auth/login", Map.of("email", email,"password",password));
             csrf = ok("GET", "/auth/csrf", null).get("token").asText();
         }
     }
@@ -52,11 +53,24 @@ class ApiIntegrationTest {
             .GET().build();
         var response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
         assertThat(response.statusCode()).isEqualTo(200);
-        assertThat(response.body()).contains("/api/users", "/api/categories", "/api/areas", "/api/technicians", "/api/reports",
+        assertThat(response.body()).contains("/api/auth/register", "/api/users", "/api/categories", "/api/areas", "/api/technicians", "/api/reports",
             "/api/reports/{reportId}/comments", "/api/notifications", "/api/report-history", "/api/priorities",
             "/api/report-statuses", "/api/roles");
         assertThat(response.body()).contains("categoryId", "areaId", "priority", "status", "q");
         assertThat(response.body()).contains("\"put\"", "\"delete\"");
+    }
+
+    @Test void anonymousCanRegisterThenLoginWithReporterRole() throws Exception {
+        var client = new Client();
+        client.csrf = client.ok("GET", "/auth/csrf", null).get("token").asText();
+        var created = client.ok("POST", "/auth/register", Map.of(
+            "name", "Estudiante nuevo", "email", "nuevo@fixcampus.local", "password", "Registro-9284!"));
+        assertThat(created.get("email").asText()).isEqualTo("nuevo@fixcampus.local");
+        assertThat(created.get("role").asText()).isEqualTo("REPORTER");
+        assertThat(client.call("POST", "/auth/register", Map.of(
+            "name", "Repetido", "email", "nuevo@fixcampus.local", "password", "Registro-9284!")).statusCode()).isEqualTo(409);
+        client.login("nuevo@fixcampus.local", "Registro-9284!");
+        assertThat(client.ok("GET", "/auth/me", null).get("name").asText()).isEqualTo("Estudiante nuevo");
     }
 
     @Test void ownershipTransitionsHistoryDashboardAndFallbackWorkTogether() throws Exception {

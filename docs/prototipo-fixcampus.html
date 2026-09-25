@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Prototipo FixCampus</title>
+  <style>
+    :root{font-family:Arial,sans-serif;color:#19353b;background:#f7faf9}*{box-sizing:border-box}body{margin:0}.bar{padding:18px 32px;background:#12343b;color:#fff;font-weight:700}.wrap{max-width:1060px;margin:32px auto;padding:0 20px}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}.screen{min-height:210px;padding:22px;background:#fff;border:1px solid #dce7e4;border-radius:12px}.screen h2{margin:0 0 16px;font-size:18px}.field{height:35px;margin:9px 0;padding:10px;border:1px solid #b9c9c7;border-radius:6px;color:#758689;font-size:12px}.button{display:inline-block;margin-top:7px;padding:10px 15px;border-radius:7px;color:#fff;background:#177a72;font-size:12px}.row{display:flex;gap:8px;flex-wrap:wrap}.chip{padding:7px 9px;border-radius:6px;background:#e4f1ef;font-size:11px}.metric{display:inline-block;width:30%;margin:1%;padding:15px 10px;background:#eef5f3;border-radius:8px}.metric strong,.metric small{display:block}.metric strong{font-size:24px}.metric small{margin-top:6px;color:#64777a;font-size:11px}@media(max-width:700px){.grid{grid-template-columns:1fr}.metric{width:30%}}
+  </style>
+</head>
+<body>
+  <div class="bar">F+ FixCampus · Prototipo de flujo</div>
+  <main class="wrap">
+    <p>Referencia de las pantallas usadas para organizar la navegación y los campos antes de implementar.</p>
+    <div class="grid">
+      <section class="screen"><h2>01 · Iniciar sesión</h2><div class="field">Correo electrónico</div><div class="field">Contraseña</div><span class="button">Ingresar a FixCampus →</span><p><small>¿Todavía no tienes una cuenta? Crear cuenta</small></p></section>
+      <section class="screen"><h2>02 · Crear cuenta</h2><div class="field">Nombre completo</div><div class="field">Correo electrónico</div><div class="field">Contraseña (12 caracteres mínimo)</div><span class="button">Crear cuenta →</span></section>
+      <section class="screen"><h2>03 · Dashboard</h2><div class="metric"><strong>24</strong><small>Total</small></div><div class="metric"><strong>8</strong><small>En atención</small></div><div class="metric"><strong>12</strong><small>Resueltos</small></div><p>Accesos: Incidencias · Nueva incidencia · Administración</p></section>
+      <section class="screen"><h2>04 · Nueva incidencia</h2><div class="field">Título del problema</div><div class="field">Descripción y ubicación</div><div class="row"><span class="chip">Categoría</span><span class="chip">Área</span><span class="chip">Prioridad</span></div><span class="button">Guardar reporte</span></section>
+    </div>
+  </main>
+</body>
+</html>

@@ -8,6 +8,9 @@ import java.util.List;
 public final class Dtos {
     private Dtos() { }
     public record Login(@NotBlank @Email String email, @NotBlank String password) { }
+    public record Register(@NotBlank @Size(max=120) String name,
+                           @NotBlank @Email @Size(max=180) String email,
+                           @NotBlank @Size(min=12, max=72) String password) { }
     public record UserInput(@NotBlank @Size(max=120) String name, @NotBlank @Email @Size(max=180) String email,
                             @Size(max=72) String password, @NotNull Role role, boolean active) { }
     public record UserView(Long id, String name, String email, Role role, boolean active) { }
