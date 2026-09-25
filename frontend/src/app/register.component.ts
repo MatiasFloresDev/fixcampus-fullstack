@@ -13,7 +13,7 @@ import { MATERIAL } from './material';
   <div class="login-story">
     <h1>{{i.t('Un mejor campus empieza contigo.','A better campus starts with you.')}}</h1>
     <p>{{i.t('Crea tu cuenta para registrar incidencias y consultar su atención.','Create an account to report issues and follow their progress.')}}</p>
-    <div class="campus-art" aria-hidden="true"><span class="art-sun"></span><div class="building a"></div><div class="building b"></div><div class="building c"></div><span class="art-tree"></span><span class="art-path"></span></div>
+    <img class="campus-photo" src="/images/biblioteca.jpg" width="1200" height="800" alt="Estanterías y pasillo de una biblioteca" fetchpriority="high">
     <span class="story-caption">{{i.t('Una cuenta, un canal claro para cuidar el campus.','One account, one clear channel to care for the campus.')}}</span>
   </div>
   <div class="panel login-card">
@@ -45,3 +45,4 @@ export class RegisterComponent {
     finally { this.busy=false; }
   }
 }
+
