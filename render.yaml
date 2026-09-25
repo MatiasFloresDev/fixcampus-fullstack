@@ -38,12 +38,14 @@ services:
         fromDatabase:
           name: fixcampus-db
           property: password
+      - key: FRONTEND_URL
+        value: https://fixcampus-web.onrender.com
 
   - type: web
     runtime: static
     name: fixcampus-web
     buildCommand: cd frontend && npm ci && npm run build
-    staticPublishPath: ./frontend/dist/fixcampus/browser
+    staticPublishPath: ./frontend/dist/frontend
     routes:
       - type: rewrite
         source: /api/*

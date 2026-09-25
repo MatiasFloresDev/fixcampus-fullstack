@@ -1,0 +1,431 @@
+<header class="site-header">
+  <a class="brand" href="/" aria-label="Inicio de FixCampus">
+    <img class="brand-logo" ngSrc="images/fixcampus-logo.png" width="2172" height="724" priority alt="Logo de FixCampus" />
+  </a>
+
+  <button
+    class="menu-toggle"
+    type="button"
+    aria-controls="main-navigation"
+    [attr.aria-label]="menuAbierto ? 'Cerrar menú' : 'Abrir menú'"
+    [attr.aria-expanded]="menuAbierto"
+    (click)="alternarMenu()">
+    <span aria-hidden="true"></span>
+    <span aria-hidden="true"></span>
+    <span aria-hidden="true"></span>
+    <span class="sr-only">Abrir menú</span>
+  </button>
+
+  <nav id="main-navigation" [class.open]="menuAbierto" aria-label="Navegación principal">
+    <a [class.active]="paginaActual === 'inicio'" href="/" (click)="cerrarMenu()">Inicio</a>
+    <a href="/#beneficios" (click)="cerrarMenu()">Beneficios</a>
+    <a href="/#como-funciona" (click)="cerrarMenu()">Cómo funciona</a>
+    <a href="/#mapa" (click)="cerrarMenu()">Mapa</a>
+    <a [class.active]="paginaActual === 'reportar'" href="/reportar" (click)="cerrarMenu()">Reportar</a>
+    <div class="menu-auth">
+      @if (isAuthenticated) {
+        <span>{{ usuarioActual }}</span>
+        <button type="button" (click)="cerrarSesion()">Cerrar sesión</button>
+      } @else {
+        <a href="/registrarse" (click)="cerrarMenu()">Registrarse</a>
+        <a href="/iniciar-sesion" (click)="cerrarMenu()">Iniciar sesión</a>
+      }
+    </div>
+  </nav>
+
+  <div class="header-actions">
+    <a href="/reportar#reportes">Mis reportes</a>
+    @if (isAuthenticated) {
+      <span class="account-name">{{ usuarioActual }}</span>
+      <button class="logout-button" type="button" (click)="cerrarSesion()">Cerrar sesión</button>
+    } @else {
+      <a href="/registrarse">Registrarse</a>
+      <a href="/iniciar-sesion">Iniciar sesión</a>
+    }
+  </div>
+</header>
+
+<main>
+  @if (paginaActual === 'inicio') {
+    <section id="inicio" class="landing-hero">
+      <div class="hero-content">
+        <span class="tag">PLATAFORMA DE INCIDENCIAS DEL CAMPUS</span>
+        <h1>Un problema reportado <em>es un problema atendido.</em></h1>
+        <p>FixCampus conecta a estudiantes y personal con las áreas responsables de mantener espacios seguros, funcionales y agradables.</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="/reportar">Reportar una incidencia</a>
+          <a class="button button-secondary" href="/#como-funciona">Ver cómo funciona</a>
+        </div>
+        <div class="hero-message"><span class="message-dot"></span>Registra el problema y consulta su avance.</div>
+      </div>
+      <div class="hero-panel">
+          <img class="hero-image" ngSrc="images/mantenimiento-campus.webp" width="1536" height="1024" priority alt="Estudiante reportando un problema mientras un técnico repara un aula del campus" />
+      </div>
+    </section>
+
+    <section id="beneficios" class="benefits">
+      <article>
+        <span class="benefit-number">01</span>
+        <h2>Reporta rápido</h2>
+        <p>Cuenta qué pasó y dónde lo viste.</p>
+      </article>
+      <article>
+        <span class="benefit-number">02</span>
+        <h2>Llega al área correcta</h2>
+        <p>La categoría ayuda a ordenar la atención.</p>
+      </article>
+      <article>
+        <span class="benefit-number">03</span>
+        <h2>Mira el avance</h2>
+        <p>Consulta el estado de tu reporte cuando quieras.</p>
+      </article>
+    </section>
+
+    <section class="overview-section" aria-labelledby="overview-title">
+      <div class="overview-photo">
+        <img ngSrc="images/mantenimiento-real.jpg" width="900" height="600" alt="Persona realizando mantenimiento en un espacio del campus" />
+        <div class="photo-note">
+          <strong>Una incidencia bien descrita</strong>
+          <span>ayuda a encontrar una solución más rápido.</span>
+        </div>
+      </div>
+      <div class="overview-copy">
+        <span class="tag">TODO EN UN SOLO LUGAR</span>
+        <h2 id="overview-title">Reportar no tiene por qué ser complicado.</h2>
+        <p>Solo necesitas contar qué ocurrió y señalar dónde. El resto queda organizado en FixCampus.</p>
+        <ol class="overview-list">
+          <li>
+            <span>01</span>
+            <div><strong>Describe el problema</strong><small>Agrega un título y una explicación breve.</small></div>
+          </li>
+          <li>
+            <span>02</span>
+            <div><strong>Indica el lugar</strong><small>Selecciona la categoría y escribe la ubicación.</small></div>
+          </li>
+          <li>
+            <span>03</span>
+            <div><strong>Consulta el estado</strong><small>Revisa tu reporte desde “Mis reportes”.</small></div>
+          </li>
+        </ol>
+        <a class="text-link" href="/reportar">Ir al formulario <span aria-hidden="true">→</span></a>
+      </div>
+    </section>
+
+    <section class="categories-section" aria-labelledby="categories-title">
+      <div class="section-intro compact-intro categories-heading">
+        <h2 id="categories-title">Selecciona una categoría</h2>
+        <p>Elige el tipo de incidencia que quieres registrar.</p>
+      </div>
+      <div class="category-grid">
+        <a class="category-card" href="/reportar?categoria=Electricidad">
+          <span class="category-index">01</span>
+          <span><strong>Electricidad</strong><small>Luces, enchufes o cortes de energía.</small></span>
+          <span class="category-arrow">Abrir</span>
+        </a>
+        <a class="category-card" href="/reportar?categoria=Limpieza">
+          <span class="category-index">02</span>
+          <span><strong>Limpieza</strong><small>Aulas, baños o espacios que necesitan atención.</small></span>
+          <span class="category-arrow">Abrir</span>
+        </a>
+        <a class="category-card" href="/reportar?categoria=Infraestructura">
+          <span class="category-index">03</span>
+          <span><strong>Infraestructura</strong><small>Fugas, paredes, puertas o mobiliario.</small></span>
+          <span class="category-arrow">Abrir</span>
+        </a>
+        <a class="category-card" href="/reportar?categoria=Equipamiento">
+          <span class="category-index">04</span>
+          <span><strong>Equipamiento</strong><small>Proyectores, computadoras u otros equipos.</small></span>
+          <span class="category-arrow">Abrir</span>
+        </a>
+      </div>
+    </section>
+
+    <section id="como-funciona" class="process-section">
+      <div class="section-intro">
+        <span class="tag">PROCESO SIMPLE</span>
+        <h2>Del reporte a la solución</h2>
+        <p>Organizamos cada paso para que el campus pueda responder mejor.</p>
+      </div>
+      <div class="process-grid">
+        <article class="process-card">
+          <img class="process-image" ngSrc="images/estudiantes-real.jpg" width="900" height="600" alt="Estudiantes registrando una incidencia" />
+          <span class="process-number">01</span>
+          <h3>Cuéntanos qué ocurrió</h3>
+          <p>Registra una descripción breve y precisa de la incidencia.</p>
+        </article>
+        <article class="process-card featured">
+          <img class="process-image" ngSrc="images/mantenimiento-real.jpg" width="900" height="600" alt="Personal atendiendo un problema del campus" />
+          <span class="process-number">02</span>
+          <h3>Organizamos la información</h3>
+          <p>El reporte se clasifica para llegar al responsable adecuado.</p>
+        </article>
+        <article class="process-card">
+          <img class="process-image" ngSrc="images/aula-real.jpg" width="900" height="600" alt="Aula del campus donde se puede revisar una incidencia" />
+          <span class="process-number">03</span>
+          <h3>Consulta el avance</h3>
+          <p>Revisa el estado de tu incidencia hasta que sea atendida.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="movil" class="mobile-section">
+      <div class="mobile-copy">
+        <span class="tag">DESDE CUALQUIER LUGAR</span>
+        <h2>Reporta también desde tu celular</h2>
+        <p>FixCampus está pensado para registrar una incidencia rápidamente desde una computadora, tablet o teléfono móvil.</p>
+        <ul>
+          <li>Formulario sencillo y adaptable.</li>
+          <li>Consulta del estado de tus reportes.</li>
+          <li>Acceso desde cualquier navegador.</li>
+        </ul>
+        <a class="button button-primary" href="/reportar">Registrar desde el celular</a>
+      </div>
+      <div class="mobile-image">
+        <img ngSrc="images/celular-real.jpg" width="900" height="600" alt="Persona usando un teléfono celular" />
+      </div>
+    </section>
+
+    <section id="mapa" class="map-section" aria-labelledby="map-title">
+      <div class="map-copy">
+        <span class="tag">UBICACIÓN DEL CAMPUS</span>
+        <h2 id="map-title">Encuentra el lugar de tu incidencia</h2>
+        <p>Consulta la referencia del campus antes de registrar tu reporte. Esta ubicación es provisional para el prototipo.</p>
+        <div class="location-detail">
+          <strong>UPC San Miguel</strong>
+          <span>Lima, Perú</span>
+        </div>
+        <a class="button button-primary" href="https://www.google.com/maps/search/?api=1&query=UPC+San+Miguel+Lima" target="_blank" rel="noopener">Abrir en Google Maps</a>
+      </div>
+      <div class="map-frame">
+        <iframe
+          title="Mapa interactivo de OpenStreetMap de la UPC San Miguel"
+          src="https://www.openstreetmap.org/export/embed.html?bbox=-77.101%2C-12.083%2C-77.086%2C-12.069&layer=mapnik&marker=-12.0764271%2C-77.0934265"
+          loading="lazy"
+          allowfullscreen>
+        </iframe>
+      </div>
+    </section>
+
+    <section class="trust-section" aria-labelledby="trust-title">
+      <div>
+        <span class="tag">PENSADO PARA EL CAMPUS</span>
+        <h2 id="trust-title">Tu reporte ayuda a mejorar los espacios que compartimos.</h2>
+        <p>La información se presenta de forma ordenada para que el equipo responsable pueda entender el problema y darle seguimiento.</p>
+      </div>
+      <div class="trust-actions">
+        <a class="button button-primary" href="/registrarse">Crear una cuenta</a>
+        <a class="button button-secondary" href="/iniciar-sesion">Ya tengo una cuenta</a>
+      </div>
+    </section>
+  } @else if (paginaActual === 'registrarse') {
+    <section class="auth-section auth-page auth-register-section">
+      <div class="auth-visual">
+        <img ngSrc="images/campus-real.jpg" fill priority alt="Espacio del campus listo para ser cuidado" />
+        <span>Una mejor experiencia empieza con un reporte claro.</span>
+      </div>
+      <div class="auth-copy">
+        <span class="tag">PRIMER PASO</span>
+        <h1>Regístrate en FixCampus</h1>
+        <p>Crea tu cuenta con un correo institucional para enviar incidencias y consultar su seguimiento desde el campus.</p>
+      </div>
+      <div class="auth-card">
+        @if (!isAuthenticated) {
+          <form (ngSubmit)="registrarCuenta()">
+            <label for="registro-nombre">Nombre</label>
+            <input id="registro-nombre" type="text" name="registroNombre" [(ngModel)]="authForm.nombre" placeholder="Ejemplo: Ana" autocomplete="given-name" required />
+            <label for="registro-apellido">Apellido</label>
+            <input id="registro-apellido" type="text" name="registroApellido" [(ngModel)]="authForm.apellido" placeholder="Ejemplo: Torres" autocomplete="family-name" required />
+            <label for="registro-correo">Correo electrónico</label>
+            <input id="registro-correo" type="email" name="registroCorreo" [(ngModel)]="authForm.correo" placeholder="nombre@universidad.edu.pe" autocomplete="email" required />
+            <label for="registro-password">Contraseña</label>
+            <input id="registro-password" type="password" name="registroPassword" [(ngModel)]="authForm.password" placeholder="Mínimo 6 caracteres" autocomplete="new-password" minlength="6" required />
+            @if (registerMessage) { <p class="auth-message" role="status">{{ registerMessage }}</p> }
+            <button class="button button-primary submit-button" type="submit" [disabled]="enviandoCuenta">{{ enviandoCuenta ? 'Creando cuenta...' : 'Crear mi cuenta' }}</button>
+          </form>
+          <p class="auth-switch">¿Ya tienes una cuenta? <a href="/iniciar-sesion">Inicia sesión aquí</a>.</p>
+        } @else {
+          <div class="auth-welcome">
+            <span class="welcome-label">SESIÓN ACTIVA</span>
+            <h2>Hola, {{ usuarioActual }}</h2>
+            <p>Ya puedes registrar una incidencia y consultar tus reportes.</p>
+            <a class="button button-primary" href="/reportar">Ir al formulario</a>
+          </div>
+        }
+      </div>
+    </section>
+  } @else if (paginaActual === 'iniciar-sesion') {
+    <section class="auth-section auth-page auth-login-section">
+      <div class="auth-visual">
+        <img ngSrc="images/estudiantes-real.jpg" fill priority alt="Estudiantes colaborando en el campus" />
+        <span>Consulta lo que ocurre en los espacios que compartimos.</span>
+      </div>
+      <div class="auth-copy">
+        <span class="tag">ACCESO SEGURO</span>
+        <h1>Inicia sesión para continuar</h1>
+        <p>Ingresa con los datos de tu cuenta para registrar incidencias y revisar el avance de tus reportes.</p>
+      </div>
+      <div class="auth-card">
+        @if (!isAuthenticated) {
+          <form (ngSubmit)="iniciarSesion()">
+            <label for="login-correo">Correo electrónico</label>
+            <input id="login-correo" type="email" name="loginCorreo" [(ngModel)]="authForm.correo" placeholder="nombre@universidad.edu.pe" autocomplete="username" required />
+            <label for="login-password">Contraseña</label>
+            <input id="login-password" type="password" name="loginPassword" [(ngModel)]="authForm.password" placeholder="Tu contraseña" autocomplete="current-password" required />
+            @if (loginMessage) { <p class="auth-message" role="alert">{{ loginMessage }}</p> }
+            <button class="button button-primary submit-button" type="submit" [disabled]="enviandoLogin">{{ enviandoLogin ? 'Ingresando...' : 'Ingresar a FixCampus' }}</button>
+          </form>
+          <p class="auth-switch">¿Todavía no tienes una cuenta? <a href="/registrarse">Regístrate aquí</a>.</p>
+        } @else {
+          <div class="auth-welcome">
+            <span class="welcome-label">SESIÓN ACTIVA</span>
+            <h2>Hola, {{ usuarioActual }}</h2>
+            <p>Ya puedes registrar una incidencia y consultar tus reportes.</p>
+            <a class="button button-primary" href="/reportar">Ir al formulario</a>
+          </div>
+        }
+      </div>
+    </section>
+  } @else {
+    <section class="work-area report-page">
+      <div id="registrar" class="form-card">
+        <div class="report-visual">
+          <img ngSrc="images/mantenimiento-real.jpg" fill priority alt="Personal realizando mantenimiento en el campus" />
+          <div>
+            <strong>Ayúdanos a cuidar el campus</strong>
+            <span>Una descripción precisa facilita la atención.</span>
+          </div>
+        </div>
+        @if (isAuthenticated) {
+          <form (ngSubmit)="guardarReporte()">
+            <div class="card-title">
+              <div><span class="tag">{{ reporteEditandoId ? 'EDITAR INCIDENCIA' : 'NUEVA INCIDENCIA' }}</span><h1>{{ reporteEditandoId ? 'Editar reporte' : 'Registrar reporte' }}</h1></div>
+              <span class="card-label">Formulario</span>
+            </div>
+            <p class="card-description">Completa los datos para enviar la incidencia al equipo correspondiente.</p>
+            <label for="titulo">Título del problema</label>
+            <input id="titulo" type="text" name="titulo" [(ngModel)]="nuevoReporte.titulo" placeholder="Ejemplo: Proyector averiado" required />
+            <label for="categoria">Categoría</label>
+            <select id="categoria" name="categoria" [(ngModel)]="nuevoReporte.categoriaId" required>
+              <option [ngValue]="0">Selecciona una categoría</option>
+              @for (categoria of categorias; track categoria.idCategoria) {
+                <option [ngValue]="categoria.idCategoria">{{ categoria.nombre }}</option>
+              }
+            </select>
+            <label for="ubicacion">Ubicación</label>
+            <select id="ubicacion" name="ubicacion" [(ngModel)]="nuevoReporte.ubicacionId" required>
+              <option [ngValue]="0">Selecciona una ubicación</option>
+              @for (ubicacion of ubicaciones; track ubicacion.idUbicacion) {
+                <option [ngValue]="ubicacion.idUbicacion">{{ ubicacion.campus }} · {{ ubicacion.edificio }}</option>
+              }
+            </select>
+            <label for="prioridad">Prioridad</label>
+            <select id="prioridad" name="prioridad" [(ngModel)]="nuevoReporte.prioridad" required>
+              @for (prioridad of prioridades; track prioridad.valor) {
+                <option [ngValue]="prioridad.valor">{{ prioridad.nombre }}</option>
+              }
+            </select>
+            <small class="file-hint">Puedes elegir una prioridad inicial; el equipo puede ajustarla al revisar el caso.</small>
+            <label for="detalle-ubicacion">Detalle del lugar</label>
+            <input id="detalle-ubicacion" type="text" name="detalleUbicacion" [(ngModel)]="nuevoReporte.detalleUbicacion" placeholder="Ejemplo: Aula 301, junto a la puerta" maxlength="255" />
+            <label for="descripcion">Descripción</label>
+            <textarea id="descripcion" name="descripcion" [(ngModel)]="nuevoReporte.descripcion" placeholder="Explica qué sucedió..." required></textarea>
+            <label for="evidencia">Evidencia (opcional)</label>
+            <input
+              #evidenciaInput
+              id="evidencia"
+              type="file"
+              name="evidencia"
+              accept=".jpg,.jpeg,.png,.pdf,image/jpeg,image/png,application/pdf"
+              (change)="seleccionarEvidencia($event)" />
+            <small class="file-hint">JPG, PNG o PDF · máximo 5 MB por archivo.</small>
+            @if (evidenciaSeleccionada) {
+              <div class="evidence-selected">
+                @if (evidenciaPreviewUrl) { <img [src]="evidenciaPreviewUrl" alt="Vista previa de la evidencia seleccionada" /> }
+                <div><strong>{{ evidenciaSeleccionada.name }}</strong><span>{{ (evidenciaSeleccionada.size / 1024 / 1024).toFixed(2) }} MB</span></div>
+                <button type="button" (click)="quitarEvidencia(evidenciaInput)">Quitar</button>
+              </div>
+            }
+            @if (evidenciaMessage) { <p class="form-note form-note-error" role="alert">{{ evidenciaMessage }}</p> }
+            @if (mostrarDuplicado && reporteSimilar) {
+              <div class="duplicate-alert" role="alert">
+                <strong>Parece que ya existe un reporte parecido.</strong>
+                <span>“{{ reporteSimilar.titulo }}” · {{ reporteSimilar.estado }} · {{ reporteSimilar.fechaCreacion | date:'dd/MM/yyyy' }}</span>
+                <div><button type="button" class="text-button" (click)="mostrarDuplicado = false">Revisar formulario</button><button type="button" class="button button-primary duplicate-confirm" (click)="confirmarEnvioDuplicado()">Reportar de todas formas</button></div>
+              </div>
+            }
+            @if (cargandoOpciones) { <p class="form-note">Cargando categorías y ubicaciones...</p> }
+            @if (!cargandoOpciones && (categorias.length === 0 || ubicaciones.length === 0)) { <p class="form-note">Faltan categorías o ubicaciones en el sistema. Un administrador debe registrarlas.</p> }
+            @if (reportMessage) { <p class="auth-message" role="status">{{ reportMessage }}</p> }
+            <div class="form-actions">
+              <button class="button button-primary submit-button" type="submit" [disabled]="enviandoReporte || cargandoOpciones || categorias.length === 0 || ubicaciones.length === 0">{{ enviandoReporte ? 'Guardando...' : (reporteEditandoId ? 'Guardar cambios' : 'Enviar reporte') }}</button>
+              @if (reporteEditandoId) { <button class="button button-secondary" type="button" (click)="cancelarEdicionReporte()">Cancelar edición</button> }
+            </div>
+          </form>
+        } @else {
+          <div class="login-required">
+            <span class="tag">ACCESO REQUERIDO</span>
+            <h1>Inicia sesión para reportar</h1>
+            <p>Necesitas una cuenta para registrar una incidencia y darle seguimiento.</p>
+            <a class="button button-primary" href="/iniciar-sesion">Ir a iniciar sesión</a>
+          </div>
+        }
+      </div>
+
+      <section id="reportes" class="reports-card">
+        <div class="card-title">
+          <div><span class="tag">SEGUIMIENTO</span><h2>Mis reportes</h2></div>
+          <span class="report-total">{{ reportes.length }}</span>
+        </div>
+        <p class="card-description">Los reportes que registres aparecerán aquí.</p>
+        @if (!isAuthenticated) {
+          <div class="login-required small-required"><p>Inicia sesión para consultar tus reportes.</p><a href="/iniciar-sesion">Ingresar</a></div>
+        } @else if (cargandoReportes) {
+          <p class="form-note" role="status">Cargando tus reportes...</p>
+        } @else if (reportes.length === 0 && !reportMessage) {
+          <div class="empty-reports">
+            <img class="empty-report-image" ngSrc="images/seguimiento-reporte.png" width="1200" height="800" alt="Seguimiento de un reporte de incidencia" />
+            <strong>Aún no tienes reportes</strong>
+            <p>Registra una incidencia para comenzar el seguimiento.</p>
+          </div>
+        }
+        @for (reporte of reportes; track reporte.idReporte) {
+          <article class="report-item">
+            <div class="report-item-header"><span class="report-status">{{ reporte.estado }}</span><span class="report-category">{{ reporte.categoriaNombre }}</span>@if (reporte.prioridad) { <span class="report-priority">Prioridad {{ nombrePrioridad(reporte.prioridad) }}</span> }</div>
+            <h3>{{ reporte.titulo }}</h3>
+            <p>{{ reporte.descripcion }}</p>
+            <small>{{ nombreUbicacion(reporte.ubicacionId) }}@if (reporte.detalleUbicacion) { · {{ reporte.detalleUbicacion }} }</small>
+            <button type="button" class="report-edit-button" (click)="editarReporte(reporte)">Editar reporte</button>
+          </article>
+        }
+      </section>
+    </section>
+  }
+</main>
+
+<footer id="footer" class="site-footer">
+  <div class="footer-main">
+    <div class="footer-brand">
+      <img ngSrc="images/fixcampus-logo.png" width="2172" height="724" alt="Logo de FixCampus" />
+      <p>Una forma ordenada de mejorar los espacios del campus.</p>
+    </div>
+    <div class="footer-column">
+      <strong>Plataforma</strong>
+      <a href="/">Inicio</a>
+      <a href="/#como-funciona">Cómo funciona</a>
+      <a href="/#mapa">Ubicación</a>
+      <a href="/reportar">Registrar incidencia</a>
+      <a href="/registrarse">Registrarse</a>
+    </div>
+    <div class="footer-column">
+      <strong>Seguimiento</strong>
+      <a href="/reportar#reportes">Mis reportes</a>
+      <a href="/iniciar-sesion">Iniciar sesión</a>
+      <a href="/reportar">Ayuda</a>
+      <a href="/">Volver al inicio</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>FixCampus - Proyecto académico grupal</span>
+    <span>Proyecto académico FixCampus</span>
+  </div>
+</footer>
