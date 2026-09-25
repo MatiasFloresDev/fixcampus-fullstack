@@ -1,6 +1,6 @@
 {
   "name": "fixcampus-frontend", "version": "1.0.0", "private": true,
-  "scripts": { "start": "ng serve --host 127.0.0.1 --proxy-config proxy.conf.json", "build": "ng build", "check": "ng build --configuration development" },
+  "scripts": { "start": "ng serve --host 127.0.0.1 --port 4200 --proxy-config proxy.conf.json", "dev": "ng serve --host 127.0.0.1 --port 4200 --proxy-config proxy.conf.json", "build": "ng build", "check": "ng build --configuration development" },
   "dependencies": {
     "@angular/animations": "~20.3.0", "@angular/common": "~20.3.0", "@angular/compiler": "~20.3.0", "@angular/core": "~20.3.0", "@angular/forms": "~20.3.0", "@angular/platform-browser": "~20.3.0", "@angular/router": "~20.3.0", "@angular/material": "~20.2.0", "@angular/cdk": "~20.2.0", "rxjs": "~7.8.2", "tslib": "^2.8.1", "zone.js": "~0.15.1"
   },
